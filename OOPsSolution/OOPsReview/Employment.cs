@@ -21,6 +21,19 @@
             }
         }
 
+        public SupervisoryLevel Level
+        {
+            get { return _Level; }
+            private set
+            {
+                if (!Enum.IsDefined(typeof(SupervisoryLevel), value))
+                {
+                    throw new ArgumentException($"Supervisory level is invalid: {value}");
+                }
+                _Level = value;
+            }
+        }
+
         public double Years
         {
             get { return _Years; }
@@ -53,6 +66,31 @@
                 throw new ArgumentException($"The start date {startdate} is in the future!");
             }
             StartDate = startdate;
+        }
+
+        public void SetEmploymentResponsibilityLevel(SupervisoryLevel level)
+        {
+            Level = level;
+        }
+
+        public void CorrectStartDate(DateTime startdate)
+        {
+            if (startdate >= DateTime.Today.AddDays(1))
+            {
+                throw new ArgumentException($"The startdate {startdate} is in the future");
+            }
+            StartDate = startdate;
+        }
+
+        public void UpdateCurrentEmploymentYearsExperience()
+        {
+            TimeSpan span = DateTime.Now - StartDate;
+            Years = Math.Round((span.Days / 365.25), 1);
+        }
+        
+        public override string ToString()
+        {
+            return $"{Title}, {Level}, {StartDate.ToString("MMM dd, yyyy")}, {Years}";
         }
     }
 }
