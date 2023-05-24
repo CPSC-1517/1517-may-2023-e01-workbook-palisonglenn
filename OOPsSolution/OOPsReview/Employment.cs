@@ -1,4 +1,6 @@
-﻿namespace OOPsReview
+﻿using System.Reflection.Metadata.Ecma335;
+
+namespace OOPsReview
 {
     public class Employment
     {
@@ -41,7 +43,7 @@
             {
                 if (!Utilities.IsZeroOrPositive(value))
                 {
-                    throw new ArgumentOutOfRangeException("value");
+                    throw new ArgumentOutOfRangeException(value.ToString());
                 }
                 _Years = value;
             }
@@ -66,6 +68,16 @@
                 throw new ArgumentException($"The start date {startdate} is in the future!");
             }
             StartDate = startdate;
+
+            if (years > 0.0)
+            {
+                Years = (double)years;
+            }
+            else
+            {
+                TimeSpan span = DateTime.Now - StartDate;
+                Years = Math.Round((span.Days / 365.25), 1);
+            }
         }
 
         public void SetEmploymentResponsibilityLevel(SupervisoryLevel level)
@@ -82,10 +94,11 @@
             StartDate = startdate;
         }
 
-        public void UpdateCurrentEmploymentYearsExperience()
+        public double UpdateCurrentEmploymentYearsExperience()
         {
             TimeSpan span = DateTime.Now - StartDate;
             Years = Math.Round((span.Days / 365.25), 1);
+            return Years;
         }
         
         public override string ToString()
