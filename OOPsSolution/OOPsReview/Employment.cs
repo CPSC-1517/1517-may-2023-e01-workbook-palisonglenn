@@ -89,7 +89,7 @@ namespace OOPsReview
         {
             if (startdate >= DateTime.Today.AddDays(1))
             {
-                throw new ArgumentException($"The startdate {startdate} is in the future");
+                throw new ArgumentException($"The start date {startdate} is in the future!");
             }
             StartDate = startdate;
         }
@@ -103,7 +103,7 @@ namespace OOPsReview
         
         public override string ToString()
         {
-            return $"{Title}, {Level}, {StartDate.ToString("MMM dd, yyyy")}, {Years}";
+            return $"{Title},{Level},{StartDate.ToString("MMM dd, yyyy")},{Years}";
         }
     }
 }
